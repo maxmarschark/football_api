@@ -1,22 +1,22 @@
 class Api::V1::TeamsController < ApplicationController
-  before_action :set_teams, only: [:show, :update, :desroy]
+  before_action :set_team, only: [:show, :update, :destroy]
 
   def index
-    @teams = Team.all
-    render json: @teams
+    @teams = Team.all.includes(:players)
+    render json: @teams, include: :players
   end
 
   def show
-    render json: @teams
+    render json: @team, include: :players
   end
 
   def create
-    @team = Team.new(team-params)
+    @team = Team.new(team_params)
 
     if @team.save
-      render json: @team, status: created: # 200 OK
+      render json: @team, status: :created
     else
-      render json: @team.errors, status: :unprocessabile_entity #304
+      render json: @team.errors, status: :unprocessabile_entity
     end
   end
 
@@ -41,9 +41,9 @@ class Api::V1::TeamsController < ApplicationController
   def team_params
     params.require(:team)
     .permit(
-    :team_city,
-    :team_name,
-    :mascot
+      :team_city,
+      :team_name,
+      :mascot
     )
   end
 end

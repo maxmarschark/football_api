@@ -11,7 +11,9 @@
 #  college    :string
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
+#  team_id    :integer
 #
 
 class Player < ApplicationRecord
+  belongs_to :team
 end
