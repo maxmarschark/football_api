@@ -3,8 +3,34 @@ class Api::V1::PlayersController < ApplicationController
 
   def index
     @players = Player.all
+    render json: @players
   end
 
+  def show
+    render json: @players
+  end
+
+  def create
+    @player = Player.new(user-params)
+
+    if @player.save
+      render json: @user, status: created: # 200 OK
+    else
+      render json: @player.errors, status: :unprocessabile_entity #304
+    end
+  end
+
+  def update
+    if @player.update(player_params)
+      render json: @player
+    else
+      render json: @player.errors, status: :unprocessabile_entity
+    end
+  end
+
+  def destroy
+    @user.destroy
+  end
 
   private
 

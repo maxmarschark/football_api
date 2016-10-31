@@ -6,7 +6,31 @@ class Api::V1::TeamsController < ApplicationController
     render json: @teams
   end
 
+  def show
+    render json: @teams
+  end
 
+  def create
+    @team = Team.new(team-params)
+
+    if @team.save
+      render json: @team, status: created: # 200 OK
+    else
+      render json: @team.errors, status: :unprocessabile_entity #304
+    end
+  end
+
+  def update
+    if @team.update(team)
+      render json: @team
+    else
+      render json: @team.errors, status: :unprocessabile_entity
+    end
+  end
+
+  def destroy
+    @team.destroy
+  end
 
   private
 
